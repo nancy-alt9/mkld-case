@@ -657,6 +657,16 @@
 (function(){
   const body = document.body;
 
+  // ============ 客户外发版：默认关闭编辑功能 ============
+  // 只有 URL 带?edit=1 或 #edit 时才启用编辑工具条
+  const urlParams = new URLSearchParams(location.search);
+  const editUnlocked = urlParams.get('edit') === '1' || location.hash === '#edit';
+  if(!editUnlocked){
+    document.querySelectorAll('.edit-toolbar, .toast, .edit-hint').forEach(n => n.remove());
+    return;
+  }
+  // ==================================================
+
   // === 动态注入编辑工具栏 + toast ===（这样导出的 HTML 也能自动带上）
   document.querySelectorAll('.edit-toolbar, .toast').forEach(n => n.remove());
 
